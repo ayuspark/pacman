@@ -89,6 +89,7 @@ function movePacman(e){
 
 function eatCoin(y, x){
   if(world[y][x] === 1){
+    world[y][x] = 2;
     var divPosition = pacman1.y * (colNumber + 1) + pacman1.x;
     var coinEatenDiv = document.getElementById('world_container').children[divPosition];
     coinEatenDiv.setAttribute('class', '');

@@ -33,6 +33,13 @@ body {
   background-size: 20%;
 }
 
+#world_container div.heart {
+  background-image: url('https://goo.gl/WuNfsd');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+}
+
 #pacman {
   background: url('https://goo.gl/sxSDWS') no-repeat center;
   background-size: 95%;

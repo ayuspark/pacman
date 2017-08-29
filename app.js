@@ -1,8 +1,8 @@
 'use strict';
 var world = [];
-var rowNumber = Math.floor((window.innerHeight - 200)/20);
+var rowNumber = Math.floor((window.innerHeight - 200)/23);
 console.log(rowNumber, window.innerHeight);
-var colNumber = Math.floor((window.innerWidth - 200)/20);
+var colNumber = Math.floor((window.innerWidth - 200)/43);
 console.log(colNumber, window.innerWidth);
 
 function createWorldArray(){
@@ -31,6 +31,7 @@ function createWorldArray(){
   world[0].fill(0);
   world[world.length - 1].fill(0);
   world[1][1] = 1; //leave space for pacman
+  world[rowNumber-3][colNumber-4] = 4; //locate heart
 }
 
 function displayWorld(){
@@ -42,6 +43,8 @@ function displayWorld(){
       var br = document.createElement('br');
       if(world[j][i] === 0){
         div.setAttribute('class', 'brick');
+      } else if(world[j][i] === 4){
+        div.setAttribute('class', 'heart');
       } else {
         div.setAttribute('class', 'coin');
       }
@@ -104,12 +107,16 @@ function movePacman(e){
 }
 
 function eatCoin(y, x){
+  var divPosition = pacman1.y * (colNumber + 1) + pacman1.x;
+  var coinEatenDiv = document.getElementById('world_container').children[divPosition];
   if(world[y][x] === 1){
     world[y][x] = 2;
-    var divPosition = pacman1.y * (colNumber + 1) + pacman1.x;
-    var coinEatenDiv = document.getElementById('world_container').children[divPosition];
     coinEatenDiv.setAttribute('class', '');
     Pacman.count++;
+  } else if(world[y][x] === 4){
+    world[y][x] = 2;
+    coinEatenDiv.setAttribute('class', '');
+    Pacman.count += 50;
   }
   document.getElementById('score').innerHTML = Pacman.count;
 }

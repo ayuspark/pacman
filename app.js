@@ -71,17 +71,33 @@ function displayPacman(x, y){
   pacmanDiv.style.left = x * 1.25 + 'rem';
 }
 
+function rotate(key, obj){
+  if(key === 38){
+    obj.style.transform = 'rotate(-90deg)';
+  } else if(key === 40){
+    obj.style.transform = 'rotate(90deg)'
+  } else if(key === 37){
+    obj.style.transform = 'rotate(180deg)'
+  } else if(key === 39){
+    obj.style.transform = 'rotate(0)'
+  }
+}
+
 function movePacman(e){
   var key = e.keyCode;
   console.log(key);
   if(key === 38 && world[pacman1.y - 1][pacman1.x] !== 0){
     pacman1.y -= 1;
+    rotate(38, pacmanDiv);
   } else if(key === 40 && world[pacman1.y + 1][pacman1.x] !== 0){
     pacman1.y += 1;
+    rotate(40, pacmanDiv);
   } else if(key === 37 && world[pacman1.y][pacman1.x - 1] !== 0){
     pacman1.x -= 1;
+    rotate(37, pacmanDiv);
   } else if(key === 39 && world[pacman1.y][pacman1.x + 1] !== 0){
     pacman1.x += 1;
+    rotate(39, pacmanDiv);
   }
   eatCoin(pacman1.y, pacman1.x);
   displayPacman(pacman1.x, pacman1.y);

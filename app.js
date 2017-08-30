@@ -1,8 +1,8 @@
 'use strict';
 var world = [];
-var rowNumber = Math.floor((window.innerHeight - 200)/20);
+var rowNumber = Math.floor((window.innerHeight - 200)/40);
 console.log(rowNumber, window.innerHeight);
-var colNumber = Math.floor((window.innerWidth - 200)/50);
+var colNumber = Math.floor((window.innerWidth - 200)/40);
 console.log(colNumber, window.innerWidth);
 
 function createWorldArray(){

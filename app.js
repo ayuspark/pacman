@@ -1,8 +1,8 @@
 'use strict';
 var world = [];
-var rowNumber = Math.floor((window.innerHeight - 200)/23);
+var rowNumber = Math.floor((window.innerHeight - 200)/20);
 console.log(rowNumber, window.innerHeight);
-var colNumber = Math.floor((window.innerWidth - 200)/43);
+var colNumber = Math.floor((window.innerWidth - 200)/50);
 console.log(colNumber, window.innerWidth);
 
 function createWorldArray(){
@@ -32,6 +32,7 @@ function createWorldArray(){
   world[world.length - 1].fill(0);
   world[1][1] = 1; //leave space for pacman
   world[rowNumber-3][colNumber-4] = 4; //locate heart
+  world[Math.floor(rowNumber-2)][Math.floor(colNumber-2)] = 5; //locate ghost
 }
 
 function displayWorld(){
@@ -72,6 +73,21 @@ Pacman.count = 0;
 function displayPacman(x, y){
   pacmanDiv.style.top = y * 1.25 + 'rem';
   pacmanDiv.style.left = x * 1.25 + 'rem';
+}
+
+var ghostDiv = document.createElement('div');
+var ghost = {
+  x: Math.floor(colNumber-2),
+  y: Math.floor(rowNumber-2),
+  createGhostDiv: function(){
+    ghostDiv.setAttribute('id', 'ghost');
+    document.getElementById('world_container').appendChild(ghostDiv);
+  }
+}
+
+function displayGhost(x, y){
+  ghostDiv.style.top = (y) * 1.25 + 'rem';
+  ghostDiv.style.left = (x) * 1.25 + 'rem';
 }
 
 function rotate(key, obj){
@@ -121,10 +137,38 @@ function eatCoin(y, x){
   document.getElementById('score').innerHTML = Pacman.count;
 }
 
+function moveMonster(){
+  if(pacman1.x > ghost.x && world[ghost.y][ghost.x+1] !== 0){
+    ghost.x ++;
+  }
+  if(pacman1.x < ghost.x && world[ghost.y][ghost.x-1] !== 0){
+    ghost.x --;
+  }
+  if(pacman1.y > ghost.y && world[ghost.y+1][ghost.x] !== 0){
+    ghost.y ++;
+  }
+  if(pacman1.y < ghost.y && world[ghost.y-1][ghost.x] !== 0){
+    ghost.y --;
+  }
+  if(ghost.y === pacman1.y && ghost.x === pacman1.x){
+    setTimeout(function(){
+      window.removeEventListener('keydown', movePacman);
+      window.clearInterval(monsterInteral);
+      alert('you die');
+    }, 200)
+  }
+  displayGhost(ghost.x, ghost.y)
+}
+
+
 createWorldArray();
 displayWorld();
 var pacman1 = new Pacman(1, 1);
 pacman1.createPacmanDiv();
 displayPacman(pacman1.x, pacman1.y);
 
+ghost.createGhostDiv();
+displayGhost(ghost.x, ghost.y);
+
 window.addEventListener('keydown', movePacman);
+var monsterInteral = window.setInterval(moveMonster, 300)

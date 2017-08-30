@@ -40,6 +40,14 @@ body {
   background-size: 100%;
 }
 
+#ghost {
+  background-image: url('https://goo.gl/3TJCkF');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 150%;
+  position: absolute;
+}
+
 #pacman {
   background: url('https://goo.gl/sxSDWS') no-repeat center;
   background-size: 95%;

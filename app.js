@@ -137,7 +137,7 @@ function eatCoin(y, x){
   document.getElementById('score').innerHTML = Pacman.count;
 }
 
-function moveMonster(){
+function moveGhost(){
   if(pacman1.x > ghost.x && world[ghost.y][ghost.x+1] !== 0){
     ghost.x ++;
   }
@@ -153,8 +153,8 @@ function moveMonster(){
   if(ghost.y === pacman1.y && ghost.x === pacman1.x){
     setTimeout(function(){
       window.removeEventListener('keydown', movePacman);
-      window.clearInterval(monsterInteral);
-      alert('you die');
+      window.clearInterval(ghostInterval);
+      alert('you died');
     }, 200)
   }
   displayGhost(ghost.x, ghost.y)
@@ -163,6 +163,7 @@ function moveMonster(){
 
 createWorldArray();
 displayWorld();
+
 var pacman1 = new Pacman(1, 1);
 pacman1.createPacmanDiv();
 displayPacman(pacman1.x, pacman1.y);
@@ -171,4 +172,4 @@ ghost.createGhostDiv();
 displayGhost(ghost.x, ghost.y);
 
 window.addEventListener('keydown', movePacman);
-var monsterInteral = window.setInterval(moveMonster, 300)
+var ghostInterval = window.setInterval(moveGhost, 300)
